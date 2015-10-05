@@ -22,7 +22,6 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
 
-
     <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
     <script type="text/javascript" charset="utf-8">
 
@@ -30,30 +29,31 @@
     //
     document.addEventListener("deviceready", onDeviceReady, false);
 
-    var watchID = null;
-
     // Cordova is ready
     //
     function onDeviceReady() {
-        // Throw an error if no update is received every 30 seconds
-        var options = { timeout: 30000 };
-        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
 
     // onSuccess Geolocation
     //
     function onSuccess(position) {
         var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
-                            'Longitude: ' + position.coords.longitude     + '<br />' +
-                            '<hr />'      + element.innerHTML;
+        element.textContent = 'Latitude: '         + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          + position.timestamp          + '<br />';
     }
 
     // onError Callback receives a PositionError object
     //
     function onError(error) {
         alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
+                'message: ' + error.message + '\n');
     }
 
     </script>
@@ -68,24 +68,23 @@
       </div>
 
       <div class="tabs tabs-icon-top">
-        <a class="tab-item" href="index.html">
-          <i class="icon ion-home"></i>
+        <a class="tab-item" href ="index.html">
+          <i class="icon ion-home" ></i>
           Home
         </a>
-        <a class="tab-item" href="Ex.html">
+        <a class="tab-item" href ="Ex.html">
           <i class="icon ion-star"></i>
           Example of currentLocation
         </a>
-        <a class="tab-item" href="PrintJavascriptExample.html">
-          <i class="icon ion-gear-a"></i>
+        <a class="tab-item">
+          <i class="icon ion-gear-a" href="PrintJavascriptExample.html"></i>
           JavascriptEx
         </a>
       </div>
 
       <ion-content class="has-header">
-        <p> Hello There! </p><p>
-        </p><p> onSuccess(position)</p>
-        <p> End of Buffer </p>
+        <p> Hello There! <p>
+        <p id="geolocation">Finding geolocation...</p>
 
       </ion-content>
     </ion-pane>
